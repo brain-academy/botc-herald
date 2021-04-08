@@ -1,14 +1,15 @@
 {
+    "server": "http://34.77.25.251:3000",
     "roles": [
         "Archiviste",
         "Assassin",
         "Aubergiste",
-        "Avocat",
+        "Avocat du Diable",
         "Barbier",
         "Baron",
         "Brute",
-        "Chasseur",
-        "Chef",
+        "Chasseur de prime",
+        "Chef de Secte",
         "Commère",
         "Conspirateur",
         "Courtisane",
@@ -22,7 +23,7 @@
         "Reclus",
         "Exorciste",
         "Faussaire",
-        "Femme",
+        "Femme de chambre",
         "Fou",
         "Gardien",
         "Gitane",
@@ -46,7 +47,7 @@
         "Pukka",
         "Predicateur",
         "Professeur",
-        "P",
+        "Pô",
         "Pucelle",
         "Shabaloth",
         "Soldat",
@@ -56,5 +57,7 @@
         "Vertueux",
         "Voyante",
         "Zombuul"
-    ]
+    ],
+    "inviteText": "@IRL Player - Lyon\n\n; Parties Samedi & Dimanche spécial Débutants Joueurs & Conteurs\n\n Samedi 20 mars - 12h30 - Module #🎭bad-moon-rising et selon le temps restant #🎭a-day-to-remember\n On commence vraiment à jouer à 12h45 svp.\n Dimanche 21 mars - 12h45 - Module #🎭trouble-brewing\n On commence vraiment à jouer à 13h00 svp.\n Cette session est ouverte à tous nouveaux Conteurs qui veulent s'essayer à #🎭trouble-brewing, priorité à ceux qui n'ont jamais conté. Nous avons besoin de former en prévision des beaux jours donc n'hésitez pas à ping en dessous si vous êtes intéressés. Attention, faites un ping aussi en tant que Joueur et pas que Conteur svp.\n\n\n Adresse : 22 rue Frédéric Mistral 69003 Lyon\n\n 13 places dispo (et il n'y en aura pas plus car être trop nombreux nuit à l'expérience de jeu et prend trop de temps), ne soyez pas en retard, la partie est préparée en avance selon le nombre de joueurs\n Chacun emmène ce qu'il souhaite manger/boire, à partager ou non selon vos envies. \n\n Vous aurez tous vos rôles sur Discord par MP, surveillez bien vos messages !\n\n\n Vous pouvez retrouver tous les modules et rôles ici et notre Wiki https://brain-academy.github.io/docs/ : \n\n - #🎭trouble-brewing \n - #🎭bad-moon-rising\n - #🎭deadly-penance-day\n - #🎭largely-un-faire \n\n\n Merci de confirmer votre présence (ou absence) en faisant un 'Ping' dessous (mettez l'icône qui correspond à votre choix). Si vous souhaitez conter dimanche, ping quand même en tant que joueur svp.\n\n Présent samedi  | Présent dimanche |  Souhaite Conter dimanche |  Absent les 2 jours |\n\n ---\n Ready 2 Brain ?",
+    "assignRoleText": "Aloha,\n\nPour la seconde partie de samedi, tu es <role>.\n\nConsulte le Wiki de la Brain Academy afin de savoir comment jouer ton rôle, tu y trouveras les mécaniques et les stratégies pour le jouer.\nhttps://brain-academy.github.io/docs/modules/bad-moon-rising\n\nNe parle de ton rôle à personne et tu peux me poser toutes les questions que tu souhaites.\n\nBonne chance :sweat_smile:\n\n---\nReady 2 Brain ?"
 }

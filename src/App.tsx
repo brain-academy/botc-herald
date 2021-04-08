@@ -1,6 +1,6 @@
-import React from 'react';
-import './App.css';
-import BotcInvite from './components/botc-invite.component';
+import React from 'react'
+import './App.css'
+import BotcInvite from './components/botc-invite.component'
 
 function App() {
     return (
@@ -9,7 +9,7 @@ function App() {
                 <BotcInvite />
             </header>
         </div>
-    );
+    )
 }
 
-export default App;
+export default App

@@ -1,4 +1,9 @@
 export default interface User {
     name: string
-    discordUsername: string
+    discord: DiscordInfo
+}
+
+type DiscordInfo = {
+    id: string
+    username: string
 }
