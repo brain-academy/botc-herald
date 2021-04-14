@@ -10,7 +10,7 @@ interface ConfirmationProps {
     open: boolean
     validationCallback: () => void
     cancelationCallback: () => void
-    guests: Map<User, string>
+    guests: User[]
 }
 
 export default class Confirmation extends React.Component<ConfirmationProps, any> {
@@ -26,9 +26,14 @@ export default class Confirmation extends React.Component<ConfirmationProps, any
             <DialogTitle id="confirmation-dialog-title">Confirmer l'envoi des rôles ?</DialogTitle>
             <DialogContent dividers>
                 {
-                    Array.from(this.props.guests.entries())
-                        .filter(([_, role]) => !!role)
-                        .map(([user, role]) => <div key={user.name}>{`${user.name} => ${role}`}</div>)}
+                    this.props.guests
+                        .filter(({role}) => !!role)
+                        .map(user => <div key={user.name}>
+                            <span style={{display: 'flex', justifyContent: 'space-between'}}>
+                                <label>{user.name}</label>
+                                <label>{user.role}</label>
+                            </span>
+                        </div>)}
             </DialogContent>
             <DialogActions>
                 <Button autoFocus onClick={this.props.cancelationCallback} color="primary">Annuler</Button>
