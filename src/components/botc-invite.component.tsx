@@ -27,9 +27,8 @@ export default class BotcInvite extends React.Component<GuestsProps, GuestsState
 
     componentDidMount() {
         fetch(`${config.server}/users/botc/subscriptions`, {
-            method: 'GET', mode: 'cors', headers: new Headers({
-                'Content-Type': 'application/json'
-            })
+            method: 'GET', mode: 'cors',
+            headers: new Headers({'Content-Type': 'application/json'})
         })
             .then(response => response.json())
             .then((data: Map<DayOfWeek, User[]>) => {

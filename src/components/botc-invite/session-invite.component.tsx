@@ -1,92 +1,76 @@
 import Button from '@material-ui/core/Button'
-import React, {ChangeEvent, CSSProperties} from 'react'
+import React, {ChangeEvent, CSSProperties, useState} from 'react'
 import config from '../../config.json'
 import User from '../../domain/user'
-import Confirmation from './confirmation.component'
 import GuestRole from './guest-role.component'
-
-interface SessionInviteProps {
-    guests: User[]
-}
-
-interface SessionInviteState {
-    guests: User[]
-    assignRoleText: string
-    confirmSend: boolean
-}
+import Confirmation from './validation/confirmation.component'
+import Notification from './validation/notification.component'
 
 const REPLACE_PATTERN = /<(.*?)>/g
 
-export default class SessionInvite extends React.Component<SessionInviteProps, SessionInviteState> {
+export default function SessionInvite(props: {guests: User[]}) {
 
-    constructor(props: SessionInviteProps) {
-        super(props)
-        this.state = {
-            guests: [...this.props.guests],
-            assignRoleText: config.assignRoleText,
-            confirmSend: false
-        }
+    const [guests, setGuests] = useState([...props.guests])
+    const [assignRoleText, setAssignRoleText] = useState(config.assignRoleText)
+    const [confirmSend, setConfirmSend] = useState(false)
+    const [toastSend, setToastSend] = useState(false)
+
+    let onAssignRoleTextChange = (text: ChangeEvent<HTMLTextAreaElement>) => setAssignRoleText(text.target.value || '')
+
+    let handleSelectRole = (user: User, role: string) => {
+        user.role = role === 'default' ? '' : role
+        setGuests([...guests])
     }
 
-    onAssignRoleTextChange = (text: ChangeEvent<HTMLTextAreaElement>) => this.setState({assignRoleText: (text.target.value || '')})
-
-    handleSelectRole = (user: User, role: string) => this.setState(state => {
-        if (role === 'default')
-            user.role = ''
-        else
-            user.role = role
-        return {guests: state.guests}
-    })
-
-    sendRoles = () => {
-        Array.from(this.state.guests).forEach(user => {
+    let sendRoles = () => {
+        guests.forEach(user => {
             if (!!user.role) {
                 console.log(`${user.name}/${user.discord.id} is ${user.role}.`)
             }
             fetch(`${config.server}/users/${user.discord.id}/dm`, {
-                method: 'POST', mode: 'cors', headers: new Headers({
-                    'Content-Type': 'application/json'
-                }), body: JSON.stringify({message: this.state.assignRoleText.replaceAll(REPLACE_PATTERN, user.role)})
+                method: 'POST', mode: 'cors', headers: new Headers({'Content-Type': 'application/json'}),
+                body: JSON.stringify({message: assignRoleText.replaceAll(REPLACE_PATTERN, user.role)})
             })
+                .then(_ => {
+                    setConfirmSend(false)
+                    setToastSend(true)
+                })
+                .catch(_ => setConfirmSend(false))
         })
-        this.setState({confirmSend: false})
     }
 
-    clearRoles = () => this.setState(state => ({guests: state.guests.map(guest => ({...guest, role: ''}))}))
+    let clearRoles = () => setGuests(guests.map(guest => ({...guest, role: ''})))
 
-    render() {
-        return (
-            <div style={{height: "100%", display: 'grid', gridGap: "10px", placeItems: "center center"}}>
-                <div style={guestContainer}>
-                    {this.state.guests.map(user => <GuestRole
-                        key={user.name}
-                        user={user}
-                        selectedRole={user.role}
-                        onSelectRole={role => this.handleSelectRole(user, role)} />
-                    )}
-                </div>
-                <textarea
-                    style={{whiteSpace: 'pre-line', width: '80%', maxWidth: "800px", height: '300px', gridRow: 2}}
-                    value={this.state.assignRoleText}
-                    onChange={this.onAssignRoleTextChange}
-                />
-                <span style={{gridRow: 3}}>
-                    <Button variant="contained" onClick={this.clearRoles}>Clear</Button>
-                    <Button variant="contained"
-                        onClick={() => this.setState({confirmSend: true})}
-                        disabled={Array.from(this.state.guests.values()).filter(user => !!user.role).length === 0}
-                    >Envoyer</Button>
-                </span>
-                <Confirmation
-                    open={this.state.confirmSend}
-                    validationCallback={this.sendRoles}
-                    cancelationCallback={() => this.setState({confirmSend: false})}
-                    guests={this.state.guests}
-                />
+    return (
+        <div style={{height: "100%", display: 'grid', gridGap: "10px", placeItems: "center center"}}>
+            <div style={guestContainer}>
+                {guests.map(user => <GuestRole
+                    key={user.name}
+                    user={user}
+                    selectedRole={user.role}
+                    onSelectRole={role => handleSelectRole(user, role)} />)}
             </div>
-        )
-    }
-
+            <textarea
+                style={{whiteSpace: 'pre-line', width: '80%', maxWidth: "800px", height: '300px', gridRow: 2}}
+                value={assignRoleText}
+                onChange={onAssignRoleTextChange}
+            />
+            <span style={{gridRow: 3}}>
+                <Button variant="contained" onClick={clearRoles}>Clear</Button>
+                <Button variant="contained"
+                    onClick={() => setConfirmSend(true)}
+                    disabled={guests.filter(user => !!user.role).length === 0}
+                >Envoyer</Button>
+            </span>
+            <Confirmation
+                open={confirmSend}
+                validationCallback={sendRoles}
+                cancelationCallback={() => setConfirmSend(false)}
+                guests={guests}
+            />
+            <Notification guests={guests} toastSend={toastSend} setToastSend={setToastSend} />
+        </div>
+    )
 }
 
 const guestContainer = {
