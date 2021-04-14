@@ -1,7 +1,7 @@
+import {NativeSelect} from '@material-ui/core'
 import React, {ChangeEvent} from 'react'
 import config from '../../config.json'
 import User from '../../domain/user'
-import NativeSelect from '@material-ui/core/NativeSelect'
 
 export default function GuestRole({user: {name}, selectedRole = 'default', onSelectRole}: {user: User, selectedRole: string, onSelectRole: (role: string) => void}) {
     return (

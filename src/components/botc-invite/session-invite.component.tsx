@@ -1,4 +1,4 @@
-import Button from '@material-ui/core/Button'
+import {Button} from '@material-ui/core'
 import React, {ChangeEvent, CSSProperties, useState} from 'react'
 import config from '../../config.json'
 import User from '../../domain/user'
@@ -15,31 +15,30 @@ export default function SessionInvite(props: {guests: User[]}) {
     const [confirmSend, setConfirmSend] = useState(false)
     const [toastSend, setToastSend] = useState(false)
 
-    let onAssignRoleTextChange = (text: ChangeEvent<HTMLTextAreaElement>) => setAssignRoleText(text.target.value || '')
+    const onAssignRoleTextChange = (text: ChangeEvent<HTMLTextAreaElement>) => setAssignRoleText(text.target.value || '')
 
-    let handleSelectRole = (user: User, role: string) => {
+    const handleSelectRole = (user: User, role: string) => {
         user.role = role === 'default' ? '' : role
         setGuests([...guests])
     }
 
-    let sendRoles = () => {
+    const sendRoles = () => {
         guests.forEach(user => {
             if (!!user.role) {
-                console.log(`${user.name}/${user.discord.id} is ${user.role}.`)
-            }
-            fetch(`${config.server}/users/${user.discord.id}/dm`, {
-                method: 'POST', mode: 'cors', headers: new Headers({'Content-Type': 'application/json'}),
-                body: JSON.stringify({message: assignRoleText.replaceAll(REPLACE_PATTERN, user.role)})
-            })
-                .then(_ => {
-                    setConfirmSend(false)
-                    setToastSend(true)
+                fetch(`${config.server}/users/${user.discord.id}/dm`, {
+                    method: 'POST', mode: 'cors', headers: new Headers({'Content-Type': 'application/json'}),
+                    body: JSON.stringify({message: assignRoleText.replaceAll(REPLACE_PATTERN, user.role)})
                 })
-                .catch(_ => setConfirmSend(false))
+                    .then(_ => {
+                        setConfirmSend(false)
+                        setToastSend(true)
+                    })
+                    .catch(_ => setConfirmSend(false))
+            }
         })
     }
 
-    let clearRoles = () => setGuests(guests.map(guest => ({...guest, role: ''})))
+    const clearRoles = () => setGuests(guests.map(guest => ({...guest, role: ''})))
 
     return (
         <div style={{height: "100%", display: 'grid', gridGap: "10px", placeItems: "center center"}}>

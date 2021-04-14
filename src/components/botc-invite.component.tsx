@@ -1,59 +1,42 @@
-import AppBar from '@material-ui/core/AppBar'
-import Tab from '@material-ui/core/Tab'
-import Tabs from '@material-ui/core/Tabs'
-import React, {Fragment} from 'react'
+import {AppBar, Tab, Tabs} from '@material-ui/core'
+import React, {Fragment, useEffect, useState} from 'react'
 import config from '../config.json'
 import {DayOfWeek} from '../domain/day-of-week'
 import User from '../domain/user'
 import TabPanel from './botc-invite/invite-panel.component'
 import SessionInvite from './botc-invite/session-invite.component'
 
-interface GuestsProps { }
-interface GuestsState {
-    value: number | string
-    guests: Map<DayOfWeek, User[]>
-}
+export default function BotcInvite() {
 
-export default class BotcInvite extends React.Component<GuestsProps, GuestsState> {
-    constructor(props: GuestsProps) {
-        super(props)
-        this.state = {
-            value: 0,
-            guests: new Map()
-        }
-    }
+    const [value, setValue] = useState(0)
+    const [guests, setGuests] = useState(new Map())
 
-    handleChange = (_: React.ChangeEvent<{}>, newValue: string) => this.setState({value: newValue})
+    const handleChange = (_: React.ChangeEvent<{}>, newValue: number) => setValue(newValue)
 
-    componentDidMount() {
+    useEffect(() => {
         fetch(`${config.server}/users/botc/subscriptions`, {
             method: 'GET', mode: 'cors',
             headers: new Headers({'Content-Type': 'application/json'})
         })
             .then(response => response.json())
-            .then((data: Map<DayOfWeek, User[]>) => {
-                this.setState({guests: new Map(data)})
-            })
-    }
+            .then((data: Map<DayOfWeek, User[]>) => setGuests(new Map(data)))
+    }, [])
 
-    render() {
-        const {value} = this.state
-        const subs = Array.from(this.state.guests.entries())
-        const days = Array.from(this.state.guests.keys())
-        return (
-            <Fragment>
-                <AppBar>
-                    <Tabs value={value} onChange={this.handleChange}>
-                        {subs.map(([day]) => <Tab key={day} label={day} id={`simple-tab-${day}`} />)}
-                    </Tabs>
-                </AppBar>
-                <div style={{marginTop: "48px", height: "100%", width: "100%"}}>
-                    {subs.map(([day, users]) => (<TabPanel key={day} value={value} index={days.indexOf(day)}>
-                        <SessionInvite guests={users} />
-                    </TabPanel>)
-                    )}
-                </div>
-            </Fragment>
-        )
-    }
+    const subs = Array.from(guests.entries())
+    const days = Array.from(guests.keys())
+    return (
+        <Fragment>
+            <AppBar>
+                <Tabs value={value} onChange={handleChange}>
+                    {subs.map(([day]) => <Tab key={day} label={day} id={`simple-tab-${day}`} />)}
+                </Tabs>
+            </AppBar>
+            <div style={{marginTop: "48px", height: "100%", width: "100%"}}>
+                {subs.map(([day, users]) => (<TabPanel key={day} value={value} index={days.indexOf(day)}>
+                    <SessionInvite guests={users} />
+                </TabPanel>)
+                )}
+            </div>
+        </Fragment>
+    )
 }
