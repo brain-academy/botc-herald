@@ -3,6 +3,7 @@ import Tab from '@material-ui/core/Tab'
 import Tabs from '@material-ui/core/Tabs'
 import React, {Fragment} from 'react'
 import config from '../config.json'
+import {DayOfWeek} from '../domain/day-of-week'
 import User from '../domain/user'
 import TabPanel from './botc-invite/invite-panel.component'
 import SessionInvite from './botc-invite/session-invite.component'
@@ -10,7 +11,7 @@ import SessionInvite from './botc-invite/session-invite.component'
 interface GuestsProps { }
 interface GuestsState {
     value: number | string
-    guests: Map<string, User[]>
+    guests: Map<DayOfWeek, User[]>
 }
 
 export default class BotcInvite extends React.Component<GuestsProps, GuestsState> {
@@ -31,7 +32,7 @@ export default class BotcInvite extends React.Component<GuestsProps, GuestsState
             })
         })
             .then(response => response.json())
-            .then((data: Map<string, User[]>) => {
+            .then((data: Map<DayOfWeek, User[]>) => {
                 this.setState({guests: new Map(data)})
             })
     }
