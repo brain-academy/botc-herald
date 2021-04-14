@@ -19,10 +19,12 @@ const REPLACE_PATTERN = /<(.*?)>/g
 
 export default class SessionInvite extends React.Component<SessionInviteProps, SessionInviteState> {
 
+    private initGuests = () => new Map(this.props.guests.map(guest => [guest, '']))
+
     constructor(props: SessionInviteProps) {
         super(props)
         this.state = {
-            guests: new Map(),
+            guests: this.initGuests(),
             assignRoleText: config.assignRoleText,
             confirmSend: false
         }
@@ -30,12 +32,12 @@ export default class SessionInvite extends React.Component<SessionInviteProps, S
 
     onAssignRoleTextChange = (text: ChangeEvent<HTMLTextAreaElement>) => this.setState({assignRoleText: (text.target.value || '')})
 
-    handleSelectRole = (user: User, role: string) => this.setState(previous => {
+    handleSelectRole = (user: User, role: string) => this.setState(state => {
         if (role === 'default')
-            previous.guests.delete(user)
+            state.guests.set(user, '')
         else
-            previous.guests.set(user, role)
-        return {guests: previous.guests}
+            state.guests.set(user, role)
+        return {guests: state.guests}
     })
 
     sendRoles = () => {
@@ -55,11 +57,13 @@ export default class SessionInvite extends React.Component<SessionInviteProps, S
     render() {
         return (
             <div style={{height: "100%", display: 'grid', gridGap: "10px", placeItems: "center center"}}>
-                <div style={guestStyle}>
-                    {this.props.guests.map(user => <GuestRole
-                        key={user.name}
-                        user={user}
-                        onSelectRole={role => this.handleSelectRole(user, role)} />)}
+                <div style={guestContainer}>
+                    {Array.from(this.state.guests).map(([user, role]) => <GuestRole
+                            key={user.name}
+                            user={user}
+                            selectedRole={role}
+                            onSelectRole={role => this.handleSelectRole(user, role)} />
+                    )}
                 </div>
                 <textarea
                     style={{whiteSpace: 'pre-line', width: '80%', maxWidth: "800px", height: '300px', gridRow: 2}}
@@ -67,8 +71,11 @@ export default class SessionInvite extends React.Component<SessionInviteProps, S
                     onChange={this.onAssignRoleTextChange}
                 />
                 <span style={{gridRow: 3}}>
-                    <Button variant="contained" onClick={() => this.setState({guests: new Map()})}>Clear</Button>
-                    <Button variant="contained" onClick={() => this.setState({confirmSend: true})} disabled={this.state.guests.size === 0}>Envoyer</Button>
+                    <Button variant="contained" onClick={() => this.setState({guests: this.initGuests()})}>Clear</Button>
+                    <Button variant="contained"
+                        onClick={() => this.setState({confirmSend: true})}
+                        disabled={Array.from(this.state.guests.values()).filter(role => !!role).length === 0}
+                    >Envoyer</Button>
                 </span>
                 <Confirmation
                     open={this.state.confirmSend}
@@ -82,7 +89,7 @@ export default class SessionInvite extends React.Component<SessionInviteProps, S
 
 }
 
-const guestStyle = {
+const guestContainer = {
     gridRow: 1,
     width: '100%',
     maxWidth: '600px',

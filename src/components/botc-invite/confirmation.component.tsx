@@ -15,22 +15,20 @@ interface ConfirmationProps {
 
 export default class Confirmation extends React.Component<ConfirmationProps, any> {
 
-    constructor(props: ConfirmationProps) {
-        super(props)
-    }
-
     render() {
         return <Dialog
             disableBackdropClick
             disableEscapeKeyDown
             maxWidth="xs"
-            // onEntering={handleEntering}
             aria-labelledby="confirmation-dialog-title"
             open={this.props.open}
         >
             <DialogTitle id="confirmation-dialog-title">Confirmer l'envoi des rôles ?</DialogTitle>
             <DialogContent dividers>
-                {Array.from(this.props.guests.entries()).map(([user, role]) => <div>{`${user.name} => ${role}`}</div>)}
+                {
+                    Array.from(this.props.guests.entries())
+                        .filter(([_, role]) => !!role)
+                        .map(([user, role]) => <div key={user.name}>{`${user.name} => ${role}`}</div>)}
             </DialogContent>
             <DialogActions>
                 <Button autoFocus onClick={this.props.cancelationCallback} color="primary">Annuler</Button>

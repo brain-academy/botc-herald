@@ -4,7 +4,6 @@ import Tabs from '@material-ui/core/Tabs'
 import React, {Fragment} from 'react'
 import config from '../config.json'
 import User from '../domain/user'
-import Confirmation from './botc-invite/confirmation.component'
 import TabPanel from './botc-invite/invite-panel.component'
 import SessionInvite from './botc-invite/session-invite.component'
 
@@ -23,7 +22,7 @@ export default class BotcInvite extends React.Component<GuestsProps, GuestsState
         }
     }
 
-    handleChange = (event: React.ChangeEvent<{}>, newValue: string) => this.setState({value: newValue})
+    handleChange = (_: React.ChangeEvent<{}>, newValue: string) => this.setState({value: newValue})
 
     componentDidMount() {
         fetch(`${config.server}/users/botc/subscriptions`, {
@@ -54,7 +53,6 @@ export default class BotcInvite extends React.Component<GuestsProps, GuestsState
                     </TabPanel>)
                     )}
                 </div>
-                {/* <Confirmation open={true}/> */}
             </Fragment>
         )
     }
