@@ -1,0 +1,29 @@
+version: "3.5"
+services:
+    botc-herald:
+        build: .
+        image: brain-academy/botc-herald
+        container_name: botc-herald
+        ports:
+            - 4001:4000
+        expose:
+            - 4000
+            - 4001
+        networks:
+            - microservices-network
+            - brain-academy-network
+        labels:
+            - "traefik.enable=true"
+            - "traefik.http.routers.botc-herald.rule=Host(`brain-academy.fr`) && Path(`/botc/invite`)"
+            - "traefik.http.routers.botc-herald.middlewares=botc-herald"
+            - "traefik.http.middlewares.botc-herald.stripprefix.prefixes=/botc/invite"
+            - "traefik.http.middlewares.botc-herald.stripprefix.forceslash=false"
+            - "traefik.http.routers.botc-herald.entrypoints=web,websecure"
+            # - "traefik.http.routers.botc-herald.tls=true"
+            # - "traefik.http.routers.botc-herald.tls.certresolver=myresolver"
+
+networks:
+    microservices-network:
+        name: "microservices-network"
+    brain-academy-network:
+        name: "brain-academy-network"
