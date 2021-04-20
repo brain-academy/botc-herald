@@ -25,7 +25,7 @@ export default function SessionInvite(props: {guests: User[]}) {
     const sendRoles = () => {
         guests.forEach(user => {
             if (!!user.role) {
-                fetch(`${config.server}/users/${user.discord.id}/dm`, {
+                fetch(`${process.env.REACT_APP_API_SERVER}/users/${user.discord.id}/dm`, {
                     method: 'POST', mode: 'cors', headers: new Headers({'Content-Type': 'application/json'}),
                     body: JSON.stringify({message: assignRoleText.replaceAll(REPLACE_PATTERN, user.role)})
                 })

@@ -1,6 +1,5 @@
 import {AppBar, Tab, Tabs} from '@material-ui/core'
 import React, {Fragment, useEffect, useState} from 'react'
-import config from '../config.json'
 import {DayOfWeek} from '../domain/day-of-week'
 import User from '../domain/user'
 import TabPanel from './botc-invite/invite-panel.component'
@@ -14,7 +13,7 @@ export default function BotcInvite() {
     const handleChange = (_: React.ChangeEvent<{}>, newValue: number) => setValue(newValue)
 
     useEffect(() => {
-        fetch(`${config.server}/users/botc/subscriptions`, {
+        fetch(`${process.env.REACT_APP_API_SERVER}/users/botc/subscriptions`, {
             method: 'GET', mode: 'cors',
             headers: new Headers({'Content-Type': 'application/json'})
         })
