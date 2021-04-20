@@ -1,5 +1,5 @@
 {
-    "server": "http://34.77.25.251:3000",
+    "server": "https://brain-academy.fr/api",
     "roles": [
         "Archiviste",
         "Assassin",
