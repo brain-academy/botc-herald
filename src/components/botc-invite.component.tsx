@@ -30,12 +30,17 @@ export default function BotcInvite() {
                     {subs.map(([day]) => <Tab key={day} label={day} id={`simple-tab-${day}`} />)}
                 </Tabs>
             </AppBar>
-            <div style={{marginTop: "48px", height: "100%", width: "100%"}}>
-                {subs.map(([day, users]) => (<TabPanel key={day} value={value} index={days.indexOf(day)}>
-                    <SessionInvite guests={users} />
-                </TabPanel>)
-                )}
-            </div>
+            {
+                subs.length > 0 ?
+                    <div style={{marginTop: "48px", height: "100%", width: "100%"}}>
+                        {subs.map(([day, users]) => (<TabPanel key={day} value={value} index={days.indexOf(day)}>
+                            <SessionInvite guests={users} />
+                        </TabPanel>)
+                        )}
+                    </div>
+                    :
+                    `Aucun jour d'invitation trouvé. Veuillez vérifier que le message d'invitation comporte bien le(s) jour(s) d'invitation, complet(s) et en toutes lettres, capitalisé(s).`
+            }
         </Fragment>
     )
 }

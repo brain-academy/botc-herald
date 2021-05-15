@@ -1,6 +1,7 @@
 {
     "roles": [
         "Archiviste",
+        "Aéronaute",
         "Assassin",
         "Aubergiste",
         "Avocat du Diable",
@@ -8,6 +9,7 @@
         "Baron",
         "Brute",
         "Chasseur de prime",
+        "Charmeur de serpent",
         "Chef de Secte",
         "Commère",
         "Conspirateur",
@@ -19,6 +21,7 @@
         "Empathique",
         "Empoisonneur",
         "Enquêteur",
+        "Général",
         "Reclus",
         "Exorciste",
         "Faussaire",
