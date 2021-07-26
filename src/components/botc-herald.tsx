@@ -1,8 +1,8 @@
 import React from 'react'
-import './App.css'
-import BotcInvite from './components/botc-invite.component'
+import './botc-herald.css'
+import BotcInvite from './botc-invite'
 
-export default function App() {
+export default function BotcHerald() {
 	return (
 		<div className="App">
 			<header className="App-header">

@@ -2,8 +2,8 @@ import {AppBar, Tab, Tabs} from '@material-ui/core'
 import React, {Fragment, useEffect, useState} from 'react'
 import {DayOfWeek} from '../domain/day-of-week'
 import User from '../domain/user'
-import TabPanel from './botc-invite/invite-panel.component'
-import SessionInvite from './botc-invite/session-invite.component'
+import TabPanel from './botc-invite/invite-panel'
+import SessionInvite from './botc-invite/session-invite'
 
 export default function BotcInvite() {
 

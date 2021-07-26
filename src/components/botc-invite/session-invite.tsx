@@ -2,9 +2,9 @@ import {Button} from '@material-ui/core'
 import React, {ChangeEvent, CSSProperties, useState} from 'react'
 import config from '../../config.json'
 import User from '../../domain/user'
-import GuestRole from './guest-role.component'
-import Confirmation from './validation/confirmation.component'
-import Notification from './validation/notification.component'
+import GuestRole from './guest-role'
+import Confirmation from './validation/confirmation'
+import Notification from './validation/notification'
 
 const REPLACE_PATTERN = /<(.*?)>/g
 
