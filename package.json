@@ -1,66 +1,68 @@
 {
-    "name": "@brain-academy/botc-herald",
-    "version": "0.0.1",
-    "description": "Module containing the botc roles assignment engine.",
-    "license": "Apache-2.0",
-    "keywords": [],
-    "main": "build/src/index.js",
-    "types": "build/src/index.d.ts",
-    "files": [
-        "build/src"
-    ],
-    "scripts": {
-        "test": "jest",
-        "start": "node .",
-        "compile": "tsc",
-        "prepare": "npm run compile"
-    },
-    "publishConfig": {
-        "registry": "https://npm.pkg.github.com/brain-academy"
-    },
-    "repository": {
-        "type": "git",
-        "url": "ssh://git@github.com:brain-academy/botc-herald.git",
-        "directory": "@brain-academy/botc-herald"
-    },
-    "dependencies": {
-        "@material-ui/core": "^4.11.3",
-        "@material-ui/icons": "^4.11.2",
-        "@material-ui/lab": "^4.0.0-alpha.57",
-        "@testing-library/jest-dom": "^5.11.4",
-        "@testing-library/react": "^11.1.0",
-        "@testing-library/user-event": "^12.1.10",
-        "@types/jest": "^26.0.20",
-        "@types/node": "^14.14.32",
-        "@types/react": "^17.0.3",
-        "@types/react-dom": "^17.0.1",
-        "react": "^17.0.1",
-        "react-dom": "^17.0.1",
-        "react-scripts": "4.0.3",
-        "typescript": "^4.2.3",
-        "web-vitals": "^1.0.1"
-    },
-    "eslintConfig": {
-        "extends": [
-            "react-app",
-            "react-app/jest"
-        ]
-    },
-    "browserslist": {
-        "production": [
-            ">0.2%",
-            "not dead",
-            "not op_mini all"
-        ],
-        "development": [
-            "last 1 chrome version",
-            "last 1 firefox version",
-            "last 1 safari version"
-        ]
-    },
-    "devDependencies": {
-        "rollup": "^2.54.0",
-        "rollup-plugin-delete": "^2.0.0",
-        "rollup-plugin-typescript2": "^0.30.0"
-    }
+	"name": "@brain-academy/botc-herald",
+	"version": "0.0.1",
+	"description": "Module containing the botc roles assignment engine.",
+	"license": "Apache-2.0",
+	"keywords": [],
+	"main": "dist/index.cjs.js",
+	"module": "dist/index.esm.js",
+	"types": "dist/index.d.ts",
+	"files": [
+		"dist"
+	],
+	"scripts": {
+		"test": "jest",
+		"start": "node .",
+		"compile": "tsc",
+		"prepare": "npm run compile",
+		"build": "rollup -c",
+		"build-watch": "rollup -c -w"
+	},
+	"publishConfig": {
+		"registry": "https://npm.pkg.github.com/brain-academy"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com:brain-academy/botc-herald.git"
+	},
+	"devDependencies": {
+		"@material-ui/core": "^4.11.3",
+		"@material-ui/icons": "^4.11.2",
+		"@material-ui/lab": "^4.0.0-alpha.57",
+		"@testing-library/jest-dom": "^5.11.4",
+		"@testing-library/react": "^11.1.0",
+		"@testing-library/user-event": "^12.1.10",
+		"@types/jest": "^26.0.20",
+		"@types/node": "^14.14.32",
+		"@types/react": "^17.0.3",
+		"@types/react-dom": "^17.0.1",
+		"react-scripts": "4.0.3",
+		"typescript": "^4.2.3",
+		"web-vitals": "^1.0.1",
+		"rollup": "^2.55.1",
+		"rollup-plugin-delete": "^2.0.0",
+		"rollup-plugin-typescript2": "^0.30.0"
+	},
+	"peerDependencies": {
+		"react": "^17.0.1",
+		"react-dom": "^17.0.1"
+	},
+	"eslintConfig": {
+		"extends": [
+			"react-app",
+			"react-app/jest"
+		]
+	},
+	"browserslist": {
+		"production": [
+			">0.2%",
+			"not dead",
+			"not op_mini all"
+		],
+		"development": [
+			"last 1 chrome version",
+			"last 1 firefox version",
+			"last 1 safari version"
+		]
+	}
 }

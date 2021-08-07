@@ -1,3 +1,3 @@
-import HelloWorld from "./components/hello-world"
+import BotcHerald from "./components/botc-herald"
 
-export {HelloWorld as default}
+export {BotcHerald as default}
