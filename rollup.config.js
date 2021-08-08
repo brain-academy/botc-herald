@@ -1,3 +1,5 @@
+import json from '@rollup/plugin-json'
+import scss from 'rollup-plugin-scss'
 import typescript from 'rollup-plugin-typescript2'
 import pkg from './package.json'
 
@@ -10,10 +12,9 @@ export default [
 			{ file: pkg.module, format: 'esm' },
 		],
 		plugins: [
-			typescript({
-				typescript: require('typescript'),
-				objectHashIgnoreUnknownHack: true,
-			}),
+			typescript(),
+			scss(),
+			json()
 		],
 		external: Object.keys(pkg.peerDependencies || {}),
 	},
